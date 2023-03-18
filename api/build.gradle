@@ -1,0 +1,21 @@
+dependencies {
+    // spring boot starters
+    implementation "org.springframework.boot:spring-boot-starter-web"
+
+}
+
+tasks.withType(Jar) {
+    destinationDirectory = file("$rootDir/build/libs")
+}
+
+tasks.withType(Test) {
+    useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    enabled = false
+}
