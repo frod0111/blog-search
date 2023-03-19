@@ -31,14 +31,13 @@ public interface KakaoBlogSearchMapper {
     @Mapping(target = "postedDate", source = "kakaoDocument.datetime")
     ItemResponse toItemResponse(DocumentsResponse kakaoDocument);
 
-    @Mapping(target = "totalCount", source = "response.meta.total_count")
-    @Mapping(target = "pageableCount", source = "response.meta.pageable_count")
+    @Mapping(target = "totalCount", source = "response.meta.pageable_count")
     @Mapping(target = "isEnd", source = "response.meta.is_end")
     @Mapping(target = "apiType", constant = "KAKAO")
     @Mapping(target = "items", source = "documents")
     BlogSearchResponse toBlogSearchResponse(KaKaoBlogSearchResponse response);
 
-    default KakaoSortType toKakaoSortType(SortType sortType) {
-        return sortType.equals(SortType.ACCURACY_ORD) ? KakaoSortType.ACCURACY : KakaoSortType.RECENCY;
+    default String toKakaoSortType(SortType sortType) {
+        return sortType.equals(SortType.ACCURACY_ORD) ? KakaoSortType.ACCURACY.getName() : KakaoSortType.RECENCY.getName();
     }
 }

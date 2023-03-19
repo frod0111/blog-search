@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum NaverSortType {
-    SIM,
-    DATE;
+    SIM("sim"),
+    DATE("date");
+
+    private final String name;
 }

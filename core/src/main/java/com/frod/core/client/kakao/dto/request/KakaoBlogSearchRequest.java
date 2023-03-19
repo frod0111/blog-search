@@ -11,7 +11,7 @@ import lombok.*;
 public class KakaoBlogSearchRequest {
 
     private String query;
-    private KakaoSortType sort;
+    private String sort;
     private Integer page;
     private Integer size;
 }

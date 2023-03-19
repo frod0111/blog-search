@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum KakaoSortType {
-    ACCURACY,
-    RECENCY;
+    ACCURACY("accuracy"),
+    RECENCY("recency");
+
+    private final String name;
 }

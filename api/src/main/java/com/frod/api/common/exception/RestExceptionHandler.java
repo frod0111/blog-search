@@ -3,6 +3,7 @@ package com.frod.api.common.exception;
 import com.frod.api.common.model.ErrorResponse;
 import com.frod.core.common.constant.CustomExceptionType;
 import com.frod.core.common.exception.CustomException;
+import com.frod.core.common.exception.ExternalApiException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -42,6 +43,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorResponse, exception.getType().getHttpStatus());
     }
 
+    @ExceptionHandler(value = ExternalApiException.class)
+    public ResponseEntity<ErrorResponse> handleKakaoException(ExternalApiException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(String.valueOf(exception.getRawStatusCode()), exception.getMessage());
+        return new ResponseEntity<>(errorResponse, exception.getHttpStatus());
+    }
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception, HttpHeaders headers, HttpStatus status, WebRequest request) {
         BindingResult bindingResult = exception.getBindingResult();

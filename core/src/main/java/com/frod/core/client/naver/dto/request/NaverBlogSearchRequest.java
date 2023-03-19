@@ -17,5 +17,5 @@ public class NaverBlogSearchRequest {
     @ApiModelProperty(value = "검색 시작 위치(기본값: 1, 최댓값: 1000)")
     private Integer start;
     @ApiModelProperty(value = "검색 결과 정렬 방법 - sim: 정확도순으로 내림차순 정렬(기본값) -date: 날짜순으로 내림차순 정렬")
-    private NaverSortType sort;
+    private String sort;
 }
