@@ -2,7 +2,6 @@
 apis:
   kakao-search:
     endpoint: https://dapi.kakao.com
-    host: dapi.kakao.com
     apikey: 53a071709b55ac987e4e23432bdccbe7
   naver-search:
     endpoint: https://openapi.naver.com
