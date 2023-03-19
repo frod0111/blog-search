@@ -11,12 +11,18 @@ import com.frod.core.client.naver.dto.request.NaverBlogSearchRequest;
 import com.frod.core.client.naver.dto.response.NaverBlogSearchResponse;
 import com.frod.core.common.constant.CustomExceptionType;
 import com.frod.core.common.exception.CustomException;
+import com.frod.core.entity.KeyWordEntity;
+import com.frod.core.repository.KeywordRepository;
 import com.frod.core.service.KaKaoSearchService;
+import com.frod.core.service.KeywordService;
 import com.frod.core.service.NaverSearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+
+import java.util.List;
 
 @Slf4j
 @Service
@@ -27,10 +33,16 @@ public class SearchService {
     private final NaverBlogSearchMapper naverBlogSearchMapper;
     private final NaverSearchService naverSearchService;
     private final KaKaoSearchService kaKaoSearchService;
-
+    private final KeywordService keywordService;
 
     public BlogSearchResponse blogSearch(BlogSearchRequest request) {
         if(!ObjectUtils.isEmpty(request)) {
+
+            if(keywordService.exitsValid(request.getKeyword())) {
+                keywordService.updateCount(request.getKeyword());
+            } else {
+                keywordService.save(request.getKeyword());
+            }
 
             //네이버 블로그 검색 조회 시도
             if(ApiType.NAVER.equals(request.getApiType())) {
@@ -55,6 +67,9 @@ public class SearchService {
                     throw new CustomException(CustomExceptionType.API_ERROR);
                 }
             }
+
+
+
         } else {
             throw new CustomException(CustomExceptionType.INVALID_PARAMETER);
         }
@@ -68,5 +83,9 @@ public class SearchService {
     public NaverBlogSearchResponse naverBlogSearch(NaverBlogSearchRequest request) {
         log.info("NAVER BLOG SEARH START !!");
         return naverSearchService.naverBlogSearch(request);
+    }
+
+    public List<KeyWordEntity> rankKeywordSearch() {
+        return keywordService.top10SearchedList();
     }
 }
