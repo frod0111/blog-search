@@ -27,10 +27,4 @@ public class BlogSearchController {
         var search = searchService.blogSearch(request);
         return ResponseEntity.ok(search);
     }
-
-    @GetMapping("/test")
-    @ApiOperation(value = "블로그 검색 API",notes = "블로그를 검색합니다.")
-    public ResponseEntity<String> test(KakaoBlogSearchRequest request) {
-        return ResponseEntity.ok("OK");
-    }
 }
