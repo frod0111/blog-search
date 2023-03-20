@@ -6,6 +6,7 @@ import org.hibernate.annotations.ColumnDefault;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -20,4 +21,8 @@ public class KeyWordEntity {
     @Column(name = "COUNT")
     @ColumnDefault("0") //default 0
     private Integer count;
+    @Column(name = "INSERT_DATE")
+    private LocalDateTime insertDate;
+    @Column(name = "UPDATE_DATE")
+    private LocalDateTime updateDate;
 }

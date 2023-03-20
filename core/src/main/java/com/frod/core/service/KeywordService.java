@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -21,16 +22,18 @@ public class KeywordService {
 
     @Transactional
     public void save (String keyword) {
-        keywordRepository.save(KeyWordEntity.builder().keyword(keyword).count(1).build());
+        var now = LocalDateTime.now();
+        keywordRepository.save(KeyWordEntity.builder().keyword(keyword).count(1).insertDate(now).updateDate(now).build());
     }
 
     @Transactional
     public void updateCount(String keyword) {
-        keywordRepository.updateCount(keyword);
+        keywordRepository.updateCount(keyword, LocalDateTime.now());
     }
 
     @Transactional(readOnly = true)
     public List<KeyWordEntity> top10SearchedList() {
-        return keywordRepository.findTop10ByOrderByCountDesc();
+        var dateBy3day = LocalDateTime.now().minusDays(3);
+        return keywordRepository.findTop10AndUpdateDate(dateBy3day);
     }
 }
