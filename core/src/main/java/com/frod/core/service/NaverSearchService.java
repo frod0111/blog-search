@@ -8,18 +8,6 @@ import com.frod.core.common.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-@Slf4j
-@Service
-@RequiredArgsConstructor
-public class NaverSearchService {
-    private final NaverBlogWebClient naverBlogWebClient;
-
-    public NaverBlogSearchResponse naverBlogSearch(NaverBlogSearchRequest request) {
-        return naverBlogWebClient.search(request)
-                .flux()
-                .toStream()
-                .findFirst()
-                .orElseThrow(() -> new CustomException(CustomExceptionType.API_CLIENT_NOT_FOUND));
-    }
+public interface NaverSearchService {
+    NaverBlogSearchResponse naverBlogSearch(NaverBlogSearchRequest request);
 }
