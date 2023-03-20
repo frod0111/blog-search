@@ -42,7 +42,6 @@ public class KeywordServiceImpl implements KeywordService {
     @Cacheable(value = "rank_top_10",cacheManager = "cacheManager")
     public List<KeyWordEntity> top10SearchedList() {
         var dateBy3day = LocalDateTime.now().minusDays(3);
-        log.info("cache Test");
         return keywordRepository.findTop10AndUpdateDate(dateBy3day);
     }
     @Override
