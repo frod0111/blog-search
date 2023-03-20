@@ -58,6 +58,8 @@ subprojects {
         implementation "org.codehaus.janino:janino"
         annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
+        implementation 'com.github.ben-manes.caffeine:caffeine'
+
         // mapstruct, lombok
         implementation "org.mapstruct:mapstruct:${mapstructVersion}"
         annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"

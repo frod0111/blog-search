@@ -1,10 +1,12 @@
 package com.frod.core.service.impl;
 
+import com.frod.core.common.constant.LocalCache;
 import com.frod.core.entity.KeyWordEntity;
 import com.frod.core.repository.KeywordRepository;
 import com.frod.core.service.KeywordService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,8 +39,10 @@ public class KeywordServiceImpl implements KeywordService {
 
     @Override
     @Transactional(readOnly = true)
+    @Cacheable(value = "rank_top_10",cacheManager = "cacheManager")
     public List<KeyWordEntity> top10SearchedList() {
         var dateBy3day = LocalDateTime.now().minusDays(3);
+        log.info("cache Test");
         return keywordRepository.findTop10AndUpdateDate(dateBy3day);
     }
     @Override
