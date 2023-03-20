@@ -36,4 +36,11 @@ public class KeywordService {
         var dateBy3day = LocalDateTime.now().minusDays(3);
         return keywordRepository.findTop10AndUpdateDate(dateBy3day);
     }
+
+    @Transactional
+    public void deleteKeywordBy3day() {
+        var dateBy3day = LocalDateTime.now().minusDays(3);
+        keywordRepository.deleteKeywordBy3day(dateBy3day);
+    }
+
 }
