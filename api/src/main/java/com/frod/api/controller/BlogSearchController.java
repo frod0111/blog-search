@@ -9,6 +9,7 @@ import com.frod.core.client.kakao.dto.response.KaKaoBlogSearchResponse;
 import com.frod.core.entity.KeyWordEntity;
 import com.frod.core.service.KeywordService;
 import io.swagger.annotations.ApiOperation;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,8 +26,6 @@ import java.util.List;
 public class BlogSearchController {
 
     private final SearchService searchService;
-
-    private final KeywordService keywordService;
     @GetMapping
     @ApiOperation(value = "블로그 검색 API",notes = "블로그를 검색합니다.")
     public ResponseEntity<BlogSearchResponse> search(@Valid BlogSearchRequest request) {
