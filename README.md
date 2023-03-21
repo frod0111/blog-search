@@ -20,6 +20,12 @@
 
 #
 
+### JAR 파일 다운로드 URL
+
+#### - https://drive.google.com/file/d/16uHImqbNOHyxupMKIhlv09DY31fSKpzA/view?usp=share_link
+
+#
+
 ### 프로젝트 설명
 
 ##### - API, CORE 분리 모듈 구성.
