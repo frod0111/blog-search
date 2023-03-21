@@ -11,6 +11,8 @@ import com.frod.core.client.naver.dto.request.NaverBlogSearchRequest;
 import com.frod.core.client.naver.dto.response.NaverBlogSearchResponse;
 import com.frod.core.common.constant.CustomExceptionType;
 import com.frod.core.common.exception.CustomException;
+import com.frod.core.dto.cmd.KeywordCmd;
+import com.frod.core.dto.query.KeywordQuery;
 import com.frod.core.entity.KeyWordEntity;
 import com.frod.core.repository.KeywordRepository;
 import com.frod.core.service.KaKaoSearchService;
@@ -22,6 +24,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -39,9 +42,9 @@ public class SearchService {
         if(!ObjectUtils.isEmpty(request)) {
 
             if(keywordService.exitsValid(request.getKeyword())) {
-                keywordService.updateCount(request.getKeyword());
+                keywordService.updateCount(KeywordCmd.builder().keyword(request.getKeyword()).build());
             } else {
-                keywordService.save(request.getKeyword());
+                keywordService.save(KeywordCmd.builder().keyword(request.getKeyword()).count(1).insertDate(LocalDateTime.now()).updateDate(LocalDateTime.now()).build());
             }
 
             //네이버 블로그 검색 조회 시도
@@ -85,7 +88,7 @@ public class SearchService {
         return naverSearchService.naverBlogSearch(request);
     }
 
-    public List<KeyWordEntity> rankKeywordSearch() {
+    public List<KeywordQuery> rankKeywordSearch() {
         return keywordService.top10SearchedList();
     }
 }
