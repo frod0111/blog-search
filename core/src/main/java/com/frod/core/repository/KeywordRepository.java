@@ -19,10 +19,9 @@ public interface KeywordRepository extends JpaRepository<KeyWordEntity,String> {
     Optional<KeyWordEntity> findByIdForUpdate(@Param("keyword") String keyword);
     @Modifying
     @Query("UPDATE KeyWordEntity k SET k.count = k.count + 1, k.updateDate = :now WHERE k.keyword = :keyword")
-    int updateCount(@Param("keyword")String keyword, @Param("now") LocalDateTime now);
+    int updateCount(@Param("keyword") String keyword, @Param("now") LocalDateTime now);
 
-    @Query("SELECT k FROM KeyWordEntity k WHERE k.updateDate > :dateBy3day ORDER BY k.count DESC,k.updateDate DESC")
-    List<KeyWordEntity> findTop10AndUpdateDate(@Param("dateBy3day") LocalDateTime dateBy3day);
+    List<KeyWordEntity> findFirst10ByUpdateDateAfterOrderByCountDescUpdateDateDesc(LocalDateTime dateBy3day);
 
     @Modifying
     @Query("DELETE FROM KeyWordEntity k WHERE k.updateDate < :dateBy3day")

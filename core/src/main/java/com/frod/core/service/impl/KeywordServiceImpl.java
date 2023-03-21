@@ -1,6 +1,5 @@
 package com.frod.core.service.impl;
 
-import com.frod.core.common.constant.LocalCache;
 import com.frod.core.dto.cmd.KeywordCmd;
 import com.frod.core.dto.query.KeywordQuery;
 import com.frod.core.entity.KeyWordEntity;
@@ -47,7 +46,7 @@ public class KeywordServiceImpl implements KeywordService {
     @Cacheable(value = "rank_top_10", cacheManager = "cacheManager")
     public List<KeywordQuery> top10SearchedList() {
         var dateBy3day = LocalDateTime.now().minusDays(3);
-        return keywordRepository.findTop10AndUpdateDate(dateBy3day).stream()
+        return keywordRepository.findFirst10ByUpdateDateAfterOrderByCountDescUpdateDateDesc(dateBy3day).stream()
                 .map(keywordMapper::toQuery)
                 .collect(Collectors.toUnmodifiableList());
     }
