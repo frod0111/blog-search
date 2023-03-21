@@ -3,7 +3,9 @@ package com.frod.api.service;
 import com.frod.api.constant.ApiType;
 import com.frod.api.dto.request.BlogSearchRequest;
 import com.frod.api.dto.response.BlogSearchResponse;
+import com.frod.api.dto.response.RankKeywordResponse;
 import com.frod.api.mapper.KakaoBlogSearchMapper;
+import com.frod.api.mapper.KeywordMapper;
 import com.frod.api.mapper.NaverBlogSearchMapper;
 import com.frod.core.client.kakao.dto.request.KakaoBlogSearchRequest;
 import com.frod.core.client.kakao.dto.response.KaKaoBlogSearchResponse;
@@ -12,15 +14,11 @@ import com.frod.core.client.naver.dto.response.NaverBlogSearchResponse;
 import com.frod.core.common.constant.CustomExceptionType;
 import com.frod.core.common.exception.CustomException;
 import com.frod.core.dto.cmd.KeywordCmd;
-import com.frod.core.dto.query.KeywordQuery;
-import com.frod.core.entity.KeyWordEntity;
-import com.frod.core.repository.KeywordRepository;
 import com.frod.core.service.KaKaoSearchService;
 import com.frod.core.service.KeywordService;
 import com.frod.core.service.NaverSearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -34,6 +32,7 @@ public class SearchService {
 
     private final KakaoBlogSearchMapper kakaoBlogSearchMapper;
     private final NaverBlogSearchMapper naverBlogSearchMapper;
+    private final KeywordMapper keywordMapper;
     private final NaverSearchService naverSearchService;
     private final KaKaoSearchService kaKaoSearchService;
     private final KeywordService keywordService;
@@ -88,7 +87,7 @@ public class SearchService {
         return naverSearchService.naverBlogSearch(request);
     }
 
-    public List<KeywordQuery> rankKeywordSearch() {
-        return keywordService.top10SearchedList();
+    public List<RankKeywordResponse> rankKeywordSearch() {
+        return keywordMapper.toResponses(keywordService.top10SearchedList());
     }
 }

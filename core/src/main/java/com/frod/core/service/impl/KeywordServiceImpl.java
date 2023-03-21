@@ -3,7 +3,7 @@ package com.frod.core.service.impl;
 import com.frod.core.dto.cmd.KeywordCmd;
 import com.frod.core.dto.query.KeywordQuery;
 import com.frod.core.entity.KeyWordEntity;
-import com.frod.core.mapper.KeywordMapper;
+import com.frod.core.mapper.KeywordCoreMapper;
 import com.frod.core.repository.KeywordRepository;
 import com.frod.core.service.KeywordService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class KeywordServiceImpl implements KeywordService {
     private final KeywordRepository keywordRepository;
-    private final KeywordMapper keywordMapper;
+    private final KeywordCoreMapper keywordCoreMapper;
 
     @Override
     @Transactional(readOnly = true)
@@ -32,7 +32,7 @@ public class KeywordServiceImpl implements KeywordService {
     @Override
     @Transactional
     public void save(KeywordCmd cmd) {
-        keywordRepository.save(keywordMapper.toEntity(cmd));
+        keywordRepository.save(keywordCoreMapper.toEntity(cmd));
     }
 
     @Override
@@ -47,7 +47,7 @@ public class KeywordServiceImpl implements KeywordService {
     public List<KeywordQuery> top10SearchedList() {
         var dateBy3day = LocalDateTime.now().minusDays(3);
         return keywordRepository.findFirst10ByUpdateDateAfterOrderByCountDescUpdateDateDesc(dateBy3day).stream()
-                .map(keywordMapper::toQuery)
+                .map(keywordCoreMapper::toQuery)
                 .collect(Collectors.toUnmodifiableList());
     }
 
@@ -61,6 +61,6 @@ public class KeywordServiceImpl implements KeywordService {
     @Override
     @Transactional(readOnly = true)
     public KeywordQuery findById(String keyword) {
-        return keywordMapper.toQuery(keywordRepository.findById(keyword).orElse(new KeyWordEntity()));
+        return keywordCoreMapper.toQuery(keywordRepository.findById(keyword).orElse(new KeyWordEntity()));
     }
 }

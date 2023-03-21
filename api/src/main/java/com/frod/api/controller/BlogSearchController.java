@@ -2,6 +2,7 @@ package com.frod.api.controller;
 
 import com.frod.api.dto.request.BlogSearchRequest;
 import com.frod.api.dto.response.BlogSearchResponse;
+import com.frod.api.dto.response.RankKeywordResponse;
 import com.frod.api.service.SearchService;
 import com.frod.core.client.kakao.KakaoBlogWebClient;
 import com.frod.core.client.kakao.dto.request.KakaoBlogSearchRequest;
@@ -36,7 +37,7 @@ public class BlogSearchController {
 
     @GetMapping("/rank")
     @ApiOperation(value = "인기 검색어 TOP 10 조회 API", notes = "인기 검색어 TOP 10을 조회합니다.")
-    public ResponseEntity<List<KeywordQuery>> rankKeywordSearch() {
+    public ResponseEntity<List<RankKeywordResponse>> rankKeywordSearch() {
         return ResponseEntity.ok(searchService.rankKeywordSearch());
     }
 }

@@ -13,7 +13,7 @@ import org.mapstruct.ReportingPolicy;
         unmappedTargetPolicy = ReportingPolicy.IGNORE
 
 )
-public interface KeywordMapper {
+public interface KeywordCoreMapper {
     KeywordQuery toQuery(KeyWordEntity entity);
 
     KeyWordEntity toEntity(KeywordCmd cmd);

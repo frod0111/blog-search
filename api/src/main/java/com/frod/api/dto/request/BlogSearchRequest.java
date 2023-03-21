@@ -23,7 +23,7 @@ public class BlogSearchRequest {
     @ApiModelProperty(value = "요청 API 유형", example = "KAKAO", required = true)
     private ApiType apiType;
 
-    @ApiModelProperty(value = "정렬 타입", example = "ACCURACY_ORD")
+    @ApiModelProperty(value = "정렬 타입", example = "ACCURACY_ORD", required = true)
     private SortType sortType;
 
     @Range(min = 1, max = 50)
